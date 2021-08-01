@@ -1,4 +1,8 @@
-score={   (1, 1): 100,
+from random import randint
+from collections import Counter
+
+score={  
+    (1, 1): 100,
     (1, 2): 200,
     (1, 3): 1000,
     (1, 4): 2000,
@@ -40,19 +44,24 @@ class GameLogic:
     def __init__(self):
         pass
 
+
     @staticmethod
     def calculate_score(dice_roll:tuple )->int:
-        print(dice_roll)
         if dice_roll in score:
-            print(score[dice_roll])
+            return(score[dice_roll])
         
-        pass
-    pass
+    @staticmethod
+    def rolling_dice(num=6)->tuple:
+
+     return( tuple(randint(1,6) for _ in range(0, num)))
+
+        
+    
 
 
 
 
 if __name__=="__main__":
-    GameLogic.calculate_score((1,6))
+    print(GameLogic.rolling_dice(3))
 
  
