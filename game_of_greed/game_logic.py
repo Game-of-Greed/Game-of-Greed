@@ -35,6 +35,7 @@ score={
     (6, 4): 1200,
     (6, 5): 1800,
     (6, 6): 2400,
+    
 }
 
 
@@ -47,21 +48,53 @@ class GameLogic:
 
     @staticmethod
     def calculate_score(dice_roll:tuple )->int:
-        if dice_roll in score:
-            return(score[dice_roll])
+        if len(dice_roll)==3:
+            return 750
+        try:
+            if len(dice_roll[0])==2:
+             return 750
+        except:
+            if dice_roll in score:
+                return(score[dice_roll])
+
+        if dice_roll==(0,0):
+            return 0
+        
+
+        elif dice_roll==(1,2,3,4,5,6):
+            return 1500
+        
         
     @staticmethod
-    def rolling_dice(num=6)->tuple:
+    def roll_dice(num=6)->tuple:
 
      return( tuple(randint(1,6) for _ in range(0, num)))
 
         
-    
+class Banker :
+    def __init__(self):
+        self.unbanked=0
+        self.bank_points=0
+
+    def shelf(self,num):
+        self.unbanked+=num
+        return self.unbanked
+
+    def bank(self):
+        self.bank_points+=self.unbanked
+        self.unbanked=0
+        return self.bank_points
+
+    def clear_shelf(self):
+        self.unbanked=0
+
+
+
 
 
 
 
 if __name__=="__main__":
-    print(GameLogic.rolling_dice(3))
 
- 
+    pass
+    
