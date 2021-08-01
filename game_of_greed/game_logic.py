@@ -48,6 +48,10 @@ class GameLogic:
 
     @staticmethod
     def calculate_score(dice_roll:tuple )->int:
+        """
+        calculate score function do a calculation for dice roll each time take tuple as input 
+        and return int
+        """
         if len(dice_roll)==3:
             return 750
         try:
@@ -67,8 +71,11 @@ class GameLogic:
         
     @staticmethod
     def roll_dice(num=6)->tuple:
+        """
+        function for returning a random tuple each roll_dice in range between 1 to 6
+        """
 
-     return( tuple(randint(1,6) for _ in range(0, num)))
+        return( tuple(randint(1,6) for _ in range(0, num)))
 
         
 class Banker :
@@ -77,15 +84,26 @@ class Banker :
         self.bank_points=0
 
     def shelf(self,num):
+        """
+        function for calculate the temporary summation of roll_dice and store it in shelf 
+
+        """
         self.unbanked+=num
         return self.unbanked
 
     def bank(self):
+        """
+       function  for doing a summation for the shelf to bank 
+
+        """
         self.bank_points+=self.unbanked
         self.unbanked=0
         return self.bank_points
 
     def clear_shelf(self):
+        """
+       function  for rest the shelf each roll-dice
+        """
         self.unbanked=0
 
 
@@ -97,4 +115,3 @@ class Banker :
 if __name__=="__main__":
 
     pass
-    
