@@ -1,14 +1,4 @@
-
-class GameLogic:
-
-    @staticmethod
-    def calculate_score(self:tuple )->int:
-        pass
-    pass
-
-
-
-x={   (1, 1): 100,
+score={   (1, 1): 100,
     (1, 2): 200,
     (1, 3): 1000,
     (1, 4): 2000,
@@ -43,13 +33,26 @@ x={   (1, 1): 100,
     (6, 6): 2400,
 }
 
-y={
-    name:'Ahmmad',
-    age:"nice"
-}
+
+
+class GameLogic:
+
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def calculate_score(dice_roll:tuple )->int:
+        print(dice_roll)
+        if dice_roll in score:
+            print(score[dice_roll])
+        
+        pass
+    pass
+
+
+
 
 if __name__=="__main__":
+    GameLogic.calculate_score((1,6))
 
- if (1,6) in x:
-
-     print (y("name"))
+ 
