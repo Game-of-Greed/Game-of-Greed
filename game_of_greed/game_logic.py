@@ -11,7 +11,7 @@ class GameLogic:
 
     @staticmethod
     def calculate_score(dice_num):
-        """ This Function Takes Taple  """
+        """ This Function Takes Tuple  """
 
         if len(dice_num) > 6:
             raise Exception("Cheating Cheater! , I See you  ")
