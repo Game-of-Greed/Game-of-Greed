@@ -45,25 +45,57 @@ class GameLogic:
     def __init__(self):
         pass
 
-
     @staticmethod
-    def calculate_score(dice_roll:tuple )->int:
-        if len(dice_roll)==3:
-            return 750
-        try:
-            if len(dice_roll[0])==2:
-             return 750
-        except:
-            if dice_roll in score:
-                return(score[dice_roll])
+    def calculate_score(dice_num):
+        """ This Function Takes Taple  """
 
-        if dice_roll==(0,0):
-            return 0
-        
+        if len(dice_num) > 6:
+            raise Exception("Cheating Cheater! , I See you  ")
 
-        elif dice_roll==(1,2,3,4,5,6):
+        counts = Counter(dice_num)
+
+        if len(counts) == 6:
             return 1500
-        
+
+        if len(counts) == 3 and all(val == 2 for val in counts.values()):
+            return 1500
+
+        score = 0
+
+        ones_use = fives_useds = False
+
+        for i in range(1, 6 + 1):
+
+            pip_count = counts[i]
+
+            if pip_count >= 3:
+
+                if i == 1:
+
+                    ones_use = True
+
+                elif i == 5:
+
+                    fives_useds = True
+
+                score += i * 100
+
+                # handle 4,5,6 of a kind
+                score += score * (pip_count - 3)
+
+                # 1s are worth 10x
+                if i == 1:
+                    score *= 10
+
+        if not ones_use:
+            score += counts.get(1, 0) * 100
+
+        if not fives_useds:
+            score += counts.get(5, 0) * 50
+
+        return score
+
+
         
     @staticmethod
     def roll_dice(num=6)->tuple:
