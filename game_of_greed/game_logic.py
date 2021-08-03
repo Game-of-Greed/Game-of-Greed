@@ -66,9 +66,17 @@ class GameLogic:
      return  not Counter(keepers) - Counter(roll)
    
     @staticmethod
-    def get_scorers():
-        
-        pass
+    def get_scorers(dice):
+       all_dice_score = GameLogic.calculate_score(dice)
+       if all_dice_score == 0:            
+         return tuple()
+         scorers = []
+         for i in range(len(dice)):            
+            sub_roll = dice[:i] + dice[i + 1 :]           
+            sub_score = GameLogic.calculate_score(sub_roll)
+            if sub_score != all_dice_score:               
+                scorers.append(dice[i])
+         return tuple(scorers)
         
     @staticmethod
     def roll_dice(num=6)->tuple:
