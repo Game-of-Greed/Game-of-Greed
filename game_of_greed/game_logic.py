@@ -59,7 +59,16 @@ class GameLogic:
 
         return score
 
-
+        
+    @staticmethod
+    def validate_keepers(roll,keepers)->bool:
+      
+     return  not Counter(keepers) - Counter(roll)
+   
+    @staticmethod
+    def get_scorers():
+        
+        pass
         
     @staticmethod
     def roll_dice(num=6)->tuple:
@@ -105,5 +114,7 @@ class Banker :
 
 
 if __name__=="__main__":
+  pass
+     
+    
 
-    pass
