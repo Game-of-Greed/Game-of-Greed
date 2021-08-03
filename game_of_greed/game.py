@@ -37,6 +37,7 @@ class Game():
          if promot_dic_num=="q":
              print(f'Thanks for playing. You earned {self.bank.balance} points')
              return
+         
          else:
             promot_dic_num=tuple(([int(i) for i in promot_dic_num]))
             ramian=6-len(promot_dic_num)
@@ -52,7 +53,9 @@ class Game():
             if indecator=="q":
              print(f'Thanks for playing. You earned {self.bank.balance} points')
              return
-          
+
+
+ 
               
          
          
