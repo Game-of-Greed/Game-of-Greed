@@ -8,10 +8,55 @@ class Game():
   def  __init__(self):
       self.conter=0
       self.bank=Banker()
+      self.num_r=0
+
+  def zilch(self):
+        print(
+            """
+****************************************
+**        Zilch!!! Round over         **
+****************************************
+            """)
+        self.bank.clear_shelf()
+        print(f'You banked 0 points in round {self.conter}')
+        print(f'Total score is {self.bank.balance} points')
 
 
-      
+  def roll_again(self,roller,ramian,shelf_score):
 
+        # if ramian==6:
+        #     ramian=0
+
+        roll=numb_dice(roller,ramian)
+        print(roll)
+        print("Enter dice to keep, or (q)uit:")
+        promot_dic_num=input("> ")
+        if promot_dic_num=="q":
+            print(f'Thanks for playing. You earned {self.bank.balance} points')
+            return
+        promot_dic_num=tuple(([int(i) for i in promot_dic_num]))
+        shelf_score_new=GameLogic.calculate_score(promot_dic_num)
+        shelf=shelf_score + GameLogic.calculate_score(promot_dic_num)
+
+        if shelf_score_new==0:
+            self.zilch()
+            return
+
+
+        self.bank.balance+=shelf
+        ramian-=len(promot_dic_num)
+        print(ramian)
+
+        print(f"You have {shelf} unbanked points and {ramian} dice remaining")
+        print("(r)oll again, (b)ank your points or (q)uit:")
+        indecator=input("> ")
+        if indecator=="b":
+            print(f'You banked {shelf} points in round {self.conter}')
+            print(f'Total score is {self.bank.balance} points')
+            ramian=6
+            self.start_game(roller,ramian)
+        if indecator=='r':
+                self.roll_again(roller,ramian,shelf)
   
   def play(self,roller=None):
 
@@ -30,13 +75,23 @@ class Game():
          self.conter+=1
          print(f'Starting round {self.conter}')
          print("Rolling 6 dice...")
-         numb_dice(roller,remain)
+         roll=numb_dice(roller,remain)
+         print(roll)
          print("Enter dice to keep, or (q)uit:")
          promot_dic_num=input("> ")
          
+
          if promot_dic_num=="q":
              print(f'Thanks for playing. You earned {self.bank.balance} points')
              return
+         while not GameLogic.validate_keepers(promot_dic_num,roll):
+             print('Cheater!!! Or possibly made a typo...')
+             print(roll)
+             print("Enter dice to keep, or (q)uit:")
+             promot_dic_num=input("> ")
+             if promot_dic_num=="q":
+                print(f'Thanks for playing. You earned {self.bank.balance} points')
+                return
          
          else:
             promot_dic_num=tuple(([int(i) for i in promot_dic_num]))
@@ -49,16 +104,21 @@ class Game():
             if indecator=="b":
                 print(f'You banked {shelf_score} points in round {self.conter}')
                 print(f'Total score is {self.bank.balance} points')
+                ramian=6
                 self.start_game(roller,ramian)
+           
+            if indecator=='r':
+                self.roll_again(roller,ramian,shelf_score)
+                
+                
+
             if indecator=="q":
              print(f'Thanks for playing. You earned {self.bank.balance} points')
              return
 
 
  
-              
-         
-         
+                    
 
 
 
@@ -67,9 +127,9 @@ def numb_dice(roller=None,num=6):
  dic= roller(num) 
  dic=" ".join([str(i) for i in dic])
  dic=f'*** {dic} ***'
- print(dic)
+ return(dic)
 
-    
+
 
 
 
