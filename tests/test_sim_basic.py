@@ -15,6 +15,7 @@ def test_quitter():
 def test_one_and_done():
     game = Game()
     diffs = diff(game.play, path="tests/version_2/one_and_done.sim.txt")
+    print(diffs)
     assert not diffs, diffs
 
 
