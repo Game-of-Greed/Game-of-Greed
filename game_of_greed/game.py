@@ -45,7 +45,7 @@ class Game():
         print("Enter dice to keep, or (q)uit:")
         promot_dic_num=input("> ")
 
-        if promot_dic_num=="q":
+        if self.conter==20 or  promot_dic_num=="q":
             print(f'Thanks for playing. You earned {self.bank.balance} points')
             return
         ramian-=len(promot_dic_num)
@@ -63,7 +63,7 @@ class Game():
                 self.roll_again(roller,ramian,shelf)
   
   def play(self,roller=None):
-
+        roller=roller or GameLogic.roll_dice
         print("Welcome to Game of Greed")
         print("(y)es to play or (n)o to decline")
         promot=input("> ").lower()
@@ -75,7 +75,7 @@ class Game():
             print("OK. Maybe another time")
     
 
-  def start_game(self,roller=None,remain=6,shelf_score=0):
+  def start_game(self,roller,remain=6,shelf_score=0):
          self.conter+=1
          shelf_score+=shelf_score
          print(f'Starting round {self.conter}')
@@ -86,7 +86,7 @@ class Game():
          promot_dic_num=input("> ")
          
 
-         if promot_dic_num=="q":
+         if   self.conter==20 or promot_dic_num=="q":
              print(f'Thanks for playing. You earned {self.bank.balance} points')
              return
 
@@ -95,7 +95,7 @@ class Game():
              print(roll)
              print("Enter dice to keep, or (q)uit:")
              promot_dic_num=input("> ")
-             if promot_dic_num=="q":
+             if  self.conter==20 or  promot_dic_num=="q":
                 print(f'Thanks for playing. You earned {self.bank.balance} points')
                 return
          
@@ -127,7 +127,7 @@ class Game():
 
 def numb_dice(roller=None,num=6):
 #  print(roller)
- dic=  roller(num) 
+ dic=  roller(num) or GameLogic.roll_dice
  dic=" ".join([str(i) for i in dic])
  dic=f'*** {dic} ***'
  return(dic)
@@ -136,4 +136,4 @@ def numb_dice(roller=None,num=6):
 
 if __name__ == "__main__":
     game = Game()
-    game.play(GameLogic.roll_dice)
+    game.play()
