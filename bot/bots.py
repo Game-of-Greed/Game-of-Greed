@@ -139,7 +139,6 @@ class YourBot(BaseBot):
     def _roll_bank_or_quit(self):
       
         if self.dice_remaining <3:
-            # self.real_print(self.dice_remaining)
         
             return "b"
         else:
