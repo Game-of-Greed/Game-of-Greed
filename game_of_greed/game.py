@@ -49,13 +49,7 @@ class Game():
             print(f'Thanks for playing. You earned {self.bank.balance} points')
             return
         ramian-=len(promot_dic_num)
-        # shelf_score_new=GameLogic.calculate_score(promot_dic_num)
-        # shelf=shelf_score + GameLogic.calculate_score(promot_dic_num)
-
-
-
-        # self.bank.balance+=shelf
-
+      
         print(f"You have {shelf} unbanked points and {ramian} dice remaining")
         print("(r)oll again, (b)ank your points or (q)uit:")
         indecator=input("> ")
@@ -130,19 +124,13 @@ class Game():
              return
 
 
- 
-                    
-
-
 
 def numb_dice(roller=None,num=6):
 #  print(roller)
- dic= roller(num) 
+ dic=  roller(num) 
  dic=" ".join([str(i) for i in dic])
  dic=f'*** {dic} ***'
  return(dic)
-
-
 
 
 
