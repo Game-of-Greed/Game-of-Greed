@@ -115,7 +115,7 @@ class BaseBot(ABC):
             player = cls()
             game = Game()
             try:
-                game.play(GameLogic.roll_dice)
+                game.play()
             except SystemExit:
                 # in game system exit is fine
                 # because that's how they quit.
@@ -137,8 +137,14 @@ class NervousNellie(BaseBot):
 
 class YourBot(BaseBot):
     def _roll_bank_or_quit(self):
-        """your logic here"""
-        return "b"
+      
+        if self.dice_remaining <3:
+        
+            return "b"
+        else:
+            return "r"
+
+
 
     def _enter_dice(self):
         """simulate user entering which dice to keep.
