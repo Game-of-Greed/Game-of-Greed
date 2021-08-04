@@ -91,35 +91,7 @@ class GameLogic:
 
         return( tuple(randint(1,6) for _ in range(0, num)))
 
-        
-class Banker :
-    def __init__(self):
-        self.unbanked=0
-        self.bank_points=0
-
-    def shelf(self,num):
-        """
-        function for calculate the temporary summation of roll_dice and store it in shelf 
-
-        """
-        self.unbanked+=num
-        return self.unbanked
-
-    def bank(self):
-        """
-       function  for doing a summation for the shelf to bank 
-
-        """
-        self.bank_points+=self.unbanked
-        self.unbanked=0
-        return self.bank_points
-
-    def clear_shelf(self):
-        """
-       function  for rest the shelf each roll-dice
-        """
-        self.unbanked=0
-
+     
 
 
 

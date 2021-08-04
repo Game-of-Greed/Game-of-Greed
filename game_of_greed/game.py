@@ -1,7 +1,7 @@
 from typing import Tuple
 from game_of_greed.game_logic import *
 from game_of_greed.banker import *
-from tests.flo import *
+# from tests.flo import *
 
 class Game():
 
@@ -12,45 +12,55 @@ class Game():
 
   def zilch(self):
         print(
-            """
-****************************************
+            """****************************************
 **        Zilch!!! Round over         **
-****************************************
-            """)
+****************************************""")
         self.bank.clear_shelf()
         print(f'You banked 0 points in round {self.conter}')
         print(f'Total score is {self.bank.balance} points')
+        self.conter+=1
+        print(f'Starting round {self.conter}')
 
 
   def roll_again(self,roller,ramian,shelf_score):
+      
 
-        # if ramian==6:
-        #     ramian=0
-
+        if ramian==0:
+            self.roll_again(roller,6,shelf_score)
+       
         roll=numb_dice(roller,ramian)
+        print(f'Rolling {ramian} dice...')
         print(roll)
-        print("Enter dice to keep, or (q)uit:")
-        promot_dic_num=input("> ")
-        if promot_dic_num=="q":
-            print(f'Thanks for playing. You earned {self.bank.balance} points')
-            return
-        promot_dic_num=tuple(([int(i) for i in promot_dic_num]))
+        roll = [int(char) for char in roll if char.isdigit()]
+        promot_dic_num=tuple(([int(i) for i in roll]))
         shelf_score_new=GameLogic.calculate_score(promot_dic_num)
         shelf=shelf_score + GameLogic.calculate_score(promot_dic_num)
 
         if shelf_score_new==0:
             self.zilch()
+            self.roll_again(roller,6,shelf_score)
+
             return
 
+        print("Enter dice to keep, or (q)uit:")
+        promot_dic_num=input("> ")
 
-        self.bank.balance+=shelf
+        if promot_dic_num=="q":
+            print(f'Thanks for playing. You earned {self.bank.balance} points')
+            return
         ramian-=len(promot_dic_num)
-        print(ramian)
+        # shelf_score_new=GameLogic.calculate_score(promot_dic_num)
+        # shelf=shelf_score + GameLogic.calculate_score(promot_dic_num)
+
+
+
+        # self.bank.balance+=shelf
 
         print(f"You have {shelf} unbanked points and {ramian} dice remaining")
         print("(r)oll again, (b)ank your points or (q)uit:")
         indecator=input("> ")
         if indecator=="b":
+            self.bank.balance+=shelf
             print(f'You banked {shelf} points in round {self.conter}')
             print(f'Total score is {self.bank.balance} points')
             ramian=6
@@ -71,8 +81,9 @@ class Game():
             print("OK. Maybe another time")
     
 
-  def start_game(self,roller=None,remain=6):
+  def start_game(self,roller=None,remain=6,shelf_score=0):
          self.conter+=1
+         shelf_score+=shelf_score
          print(f'Starting round {self.conter}')
          print("Rolling 6 dice...")
          roll=numb_dice(roller,remain)
@@ -84,6 +95,7 @@ class Game():
          if promot_dic_num=="q":
              print(f'Thanks for playing. You earned {self.bank.balance} points')
              return
+
          while not GameLogic.validate_keepers(promot_dic_num,roll):
              print('Cheater!!! Or possibly made a typo...')
              print(roll)
@@ -94,21 +106,22 @@ class Game():
                 return
          
          else:
-            promot_dic_num=tuple(([int(i) for i in promot_dic_num]))
-            ramian=6-len(promot_dic_num)
-            shelf_score=GameLogic.calculate_score(promot_dic_num)
-            self.bank.balance+=shelf_score
-            print(f"You have {shelf_score} unbanked points and {ramian} dice remaining")
+            promot_dic_num=tuple(([int(i) for i in promot_dic_num if i.isdigit()]))
+            
+            remain-=len(promot_dic_num)
+            shelf_score+=GameLogic.calculate_score(promot_dic_num)
+            print(f"You have {shelf_score} unbanked points and {remain} dice remaining")
             print("(r)oll again, (b)ank your points or (q)uit:")
             indecator=input("> ")
             if indecator=="b":
+
+                self.bank.balance+=shelf_score
                 print(f'You banked {shelf_score} points in round {self.conter}')
                 print(f'Total score is {self.bank.balance} points')
-                ramian=6
-                self.start_game(roller,ramian)
+                self.start_game(roller)
            
             if indecator=='r':
-                self.roll_again(roller,ramian,shelf_score)
+                self.roll_again(roller,remain,shelf_score)
                 
                 
 
